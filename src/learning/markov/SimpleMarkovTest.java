@@ -18,8 +18,8 @@ public class SimpleMarkovTest {
     @Before
     public void setup() throws IOException {
         chains = new MarkovLanguage();
-        chains.countFrom(new File("books/english_test.txt"), "English");
-        chains.countFrom(new File("books/spanish_test.txt"), "Spanish");
+        chains.countFrom(new File("/Users/jacobcollier-tenison/Documents/GitHub/csci335/books/english_test.txt"), "English");
+        chains.countFrom(new File("/Users/jacobcollier-tenison/Documents/GitHub/csci335/books/spanish_test.txt"), "Spanish");
     }
 
     @Test
