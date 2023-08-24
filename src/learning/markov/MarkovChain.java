@@ -69,8 +69,6 @@ public class MarkovChain<L,S> {
         }
         for (L language: label2symbol2symbol.keySet()) {
             ret.put(language, probability(sequence, language)/sum);
-            System.out.println("" + language);
-            System.out.println("" + probability(sequence, language)/sum);
         }
         return ret;
     }
@@ -78,7 +76,15 @@ public class MarkovChain<L,S> {
     // Calls labelDistribution(). Returns the label with highest probability.
     // Should pass MajorMarkovTest.bestChainTest()
     public L bestMatchingChain(ArrayList<S> sequence) {
-        // TODO: YOUR CODE HERE
-        return null;
+        LinkedHashMap<L,Double> distribution = labelDistribution(sequence);
+        L mostLikely = null;
+        double max = -1.0;
+        for (Map.Entry<L,Double> entry : distribution.entrySet()) {
+            if (entry.getValue() > max) {
+                max = entry.getValue();
+                mostLikely = entry.getKey();
+            }
+        }
+        return mostLikely;
     }
 }
