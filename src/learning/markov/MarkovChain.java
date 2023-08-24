@@ -45,8 +45,18 @@ public class MarkovChain<L,S> {
     // HINT: Be sure to add 1 to both the numerator and denominator when finding the probability of a
     // transition. This helps avoid sending the probability to zero.
     public double probability(ArrayList<S> sequence, L label) {
-        // TODO: YOUR CODE HERE
-        return 0.0;
+        double probability = 1.0;
+        HashMap<Optional<S>, Histogram<S>> languageMap = label2symbol2symbol.get(label);
+        for (int i = 1; i < sequence.size();i++) {
+            double count = 1.0;
+            double total = 1.0;
+            if (languageMap.containsKey(Optional.of(sequence.get(i-1)))) {
+                count += languageMap.get(Optional.of(sequence.get(i-1))).getCountFor(sequence.get(i));
+                total += languageMap.get(Optional.of(sequence.get(i-1))).getTotalCounts();
+                probability *= (count/total);
+            }
+        }
+        return probability;
     }
 
     // Return a map from each label to P(label | sequence).

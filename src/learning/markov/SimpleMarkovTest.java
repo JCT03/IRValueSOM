@@ -75,7 +75,7 @@ public class SimpleMarkovTest {
 
     @Test
     public void testSourceProbabilities() throws IOException {
-        for (String filename: new String[]{"books/english_test.txt", "books/spanish_test.txt"}) {
+        for (String filename: new String[]{"/Users/jacobcollier-tenison/Documents/GitHub/csci335/books/english_test.txt", "/Users/jacobcollier-tenison/Documents/GitHub/csci335/books/spanish_test.txt"}) {
             double eng = chains.probability(file2chars(filename), "English");
             double spa = chains.probability(file2chars(filename), "Spanish");
             if (filename.contains("english")) {
