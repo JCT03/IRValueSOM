@@ -62,8 +62,17 @@ public class MarkovChain<L,S> {
     // Return a map from each label to P(label | sequence).
     // Should pass MajorMarkovTest.testSentenceDistributions()
     public LinkedHashMap<L,Double> labelDistribution(ArrayList<S> sequence) {
-        // TODO: YOUR CODE HERE
-        return null;
+        LinkedHashMap<L,Double> ret = new LinkedHashMap<>();
+        double sum = 0;
+        for (L language: label2symbol2symbol.keySet()) {
+            sum+=probability(sequence, language);
+        }
+        for (L language: label2symbol2symbol.keySet()) {
+            ret.put(language, probability(sequence, language)/sum);
+            System.out.println("" + language);
+            System.out.println("" + probability(sequence, language)/sum);
+        }
+        return ret;
     }
 
     // Calls labelDistribution(). Returns the label with highest probability.
