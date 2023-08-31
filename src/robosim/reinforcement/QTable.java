@@ -13,13 +13,22 @@ public class QTable {
     //  Calculate the learning rate using this formula: 1/(1 + total visits for this (state, action) pair/rateConstant)
     //  Should pass QTableTest.testLearningRate().
     public double getLearningRate(int state, int action) {
-        return 0.0;
+        final = 1/(1+visits[state][action]/rateConstant)
+        return final;
     }
 
-    // TODO: Find the action for the given state that has the highest q value.
+    // TOddDO: Find the action for the given state that has the highest q value.
     //  Should pass QTableTest.testBestAction()
     public int getBestAction(int state) {
-        return -1;
+        finalQ = q[state][0]
+        actionInd = 0
+        for(int i=1; i < q[state].length();i++){
+            if(q[state][i] > finalQ){
+                finalQ = q[state][i]
+                actionInd = i
+            }
+        }
+        return actionInd;
     }
 
     // TODO: Returns true if any action for this state is below the target
