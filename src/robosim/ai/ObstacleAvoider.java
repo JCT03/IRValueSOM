@@ -6,7 +6,7 @@ import robosim.core.Simulator;
 import robosim.reinforcement.QTable;
 
 public class ObstacleAvoider implements Controller {
-    public QTable qTable = new QTable(4, 4, 0, 5, 2, 0.5);
+    public QTable qTable = new QTable(4, 4, 0, 10, 5, 0.3);
     //State 0 = hit
     //State 1 = close
     //State 2 = far
