@@ -6,10 +6,10 @@ import robosim.core.Simulator;
 import robosim.reinforcement.QTable;
 
 public class ObstacleAvoider implements Controller {
-    public QTable qTable = new QTable(3, 4, 0, 5, 2, 0.5);
-    //State 0 = moving forwards
-    //State 1 = hit
-    //State 2 = Turning, moving backwards
+    public QTable qTable = new QTable(4, 4, 0, 5, 2, 0.5);
+    //State 0 = hit
+    //State 1 = close
+    //State 2 = far
     int NextAction;
 
     Action[] actions = new Action[]{Action.FORWARD,Action.LEFT, Action.RIGHT, Action.BACKWARD};
@@ -18,9 +18,15 @@ public class ObstacleAvoider implements Controller {
         if(sim.wasHit())
             NextAction = qTable.senseActLearn(1, -5);
         else if(qTable.getLastAction() == 0)
-            NextAction = qTable.senseActLearn(0, 1);
+            if(sim.findClosestProblem() < 30)
+                NextAction = qTable.senseActLearn(1, 1);
+            else
+                NextAction = qTable.senseActLearn(2, 1);
         else
-            NextAction = qTable.senseActLearn(2, 0);
+            if(sim.findClosestProblem() < 30)
+                NextAction = qTable.senseActLearn(1, 0);
+            else
+                NextAction = qTable.senseActLearn(2, 0);
         actions[NextAction].applyTo(sim);
     }
 }
