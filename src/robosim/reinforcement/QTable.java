@@ -74,8 +74,8 @@ public class QTable {
     public int senseActLearn(int newState, double reward) {
         int nextAction = 0;
         double learningrate = getLearningRate(lastState,lastAction);
-        double update = (1 - learningrate) * getQ(lastState, lastAction) + learningrate * (discount * q[newState][getBestAction(newState)]) + reward;
-        q[lastState][lastAction] += update;
+        double update = (1 - learningrate) * getQ(lastState, lastAction) + learningrate * (discount * q[newState][getBestAction(newState)] + reward);
+        q[lastState][lastAction] = update;
         visits[lastState][lastAction] += 1;
         if(isExploring(newState)){
             nextAction = leastVisitedAction(newState);
