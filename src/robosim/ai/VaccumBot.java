@@ -8,7 +8,7 @@ import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public class VaccumBot implements Controller {
-    public QTable qTable = new QTable(7, 4, 0, 5, 2, 0.5);
+    public QTable qTable = new QTable(7, 4, 0, 5, 5, 0.5);
     // States:
     // 0: Bumped
     // 1: DirtFound
