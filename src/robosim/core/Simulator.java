@@ -109,6 +109,12 @@ public class Simulator {
 				.map(Duple::getSecond).min(Comparator.comparingDouble(Polar::getR));
 	}
 
+	public Optional<Polar> findClosestDirt() {
+		return allVisibleObjects().stream()
+				.filter(o -> o.getFirst().isVacuumable())
+				.map(Duple::getSecond).min(Comparator.comparingDouble(Polar::getR));
+	}
+
 	public ArrayList<Duple<SimObject,Polar>> allVisibleObjects() {
 		return map.visibleObjects(bot);
 	}
