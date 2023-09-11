@@ -48,7 +48,7 @@ public class MazeExplorer {
 			if (!m.blocked(location, neighbors.get(i))) {
 				MazeExplorer successor = new MazeExplorer(m,neighbors.get(i));
 				if(m.isTreasure(successor.location)){
-					treasureFound.add(successor.location);
+					successor.treasureFound.add(successor.location);
 				}
 				successor.addTreasures(treasureFound);
 				result.add(successor);
