@@ -13,13 +13,17 @@ public class ManhattanToTreasureAndGoal implements ToIntFunction<MazeExplorer> {
         int closest = 0;
         if(!treasure.isEmpty()) {
             for (Pos pos : treasure) {
-                int dist = pos.getManhattanDist(value.getLocation());
-                if(closest == 0){
-                    closest = dist;
-                } else{
-                    if(closest > dist){
+                if(!value.getAllTreasureFound().contains(pos)) {
+                    int dist = pos.getManhattanDist(value.getLocation());
+                    if(closest == 0){
                         closest = dist;
+                    } else{
+                        if(closest > dist){
+                            closest = dist;
+                        }
                     }
+                } else{
+                    closest = value.getLocation().getManhattanDist(value.getGoal().getLocation());
                 }
             }
         } else{
