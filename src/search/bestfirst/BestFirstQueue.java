@@ -18,7 +18,7 @@ public class BestFirstQueue<T> implements SearchQueue<T> {
         Comparator<SearchNode<T>> nodeComparator = new Comparator<SearchNode<T>>() { //https://www.callicoder.com/java-priority-queue/
             @Override
             public int compare(SearchNode<T> a, SearchNode<T> b) {
-                return heuristic.applyAsInt(a.getValue()) - heuristic.applyAsInt(b.getValue());
+                return (heuristic.applyAsInt(a.getValue())+a.getDepth()) - (heuristic.applyAsInt(b.getValue())+a.getDepth());
             }
         };
         queue = new PriorityQueue<>(nodeComparator);
@@ -27,10 +27,11 @@ public class BestFirstQueue<T> implements SearchQueue<T> {
     }
 
     @Override
-    public void enqueue(SearchNode<T> node) {
-        if (!visited.containsKey(node.getValue())) {
+    public void enqueue(SearchNode<T> node)  {
+        int newEstimate = heuristic.applyAsInt(node.getValue())+node.getDepth() ;
+        if (!visited.containsKey(node.getValue())|| visited.get(node.getValue()) > newEstimate)  {
             queue.add(node);
-            visited.put(node.getValue(), heuristic.applyAsInt(node.getValue()));
+            visited.put(node.getValue(), newEstimate);
         }
     }
 
