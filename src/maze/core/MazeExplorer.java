@@ -44,9 +44,14 @@ public class MazeExplorer {
 		ArrayList<MazeExplorer> result = new ArrayList<MazeExplorer>();
 		// It should add as a successor every adjacent, unblocked neighbor square.
 		ArrayList<Pos> neighbors = m.getNeighbors(location);
-		for (int i =0; i< neighbors.size(); i++) {
+		for (int i = 0; i< neighbors.size(); i++) {
 			if (!m.blocked(location, neighbors.get(i))) {
-				result.add(new MazeExplorer(m,neighbors.get(i)));
+				MazeExplorer successor = new MazeExplorer(m,neighbors.get(i));
+				if(m.isTreasure(successor.location)){
+					treasureFound.add(successor.location);
+				}
+				successor.addTreasures(treasureFound);
+				result.add(successor);
 			}
 		}
         return result;
