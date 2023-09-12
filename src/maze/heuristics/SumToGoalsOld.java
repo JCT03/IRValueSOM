@@ -6,16 +6,14 @@ import maze.core.MazeExplorer;
 import java.util.Set;
 import java.util.function.ToIntFunction;
 
-public class SumToGoals implements ToIntFunction<MazeExplorer> {
+public class SumToGoalsOld implements ToIntFunction<MazeExplorer> {
     @Override
     public int applyAsInt(MazeExplorer value) {
         int total = 0;
         Set<Pos> treasure = value.getAllTreasureFromMaze();
         if(!treasure.isEmpty()) {
             for (Pos pos : treasure) {
-                if (!value.getAllTreasureFound().contains(pos)) {
-                    total += pos.getManhattanDist(value.getLocation());
-                }
+                total += pos.getManhattanDist(value.getLocation());
             }
         }
         total+= value.getLocation().getManhattanDist(value.getGoal().getLocation());;
