@@ -35,7 +35,7 @@ public class NegaMax extends CheckersSearcher {
                 return new Duple<Integer, Move>(-Integer.MAX_VALUE, null);
             }
         } else if(depthLimit <= 0) {
-                return new Duple<Integer, Move>(-getEvaluator().applyAsInt(board), null);
+                return new Duple<Integer, Move>(getEvaluator().applyAsInt(board), null);
         }
         int best_score = -Integer.MAX_VALUE;
         Move best_move = null;
@@ -44,10 +44,10 @@ public class NegaMax extends CheckersSearcher {
             Checkerboard newBoard = board.duplicate();
             newBoard.move(currentMove);
             int value = 0;
-            Move move;
             Duple<Integer, Move> nega = NegaMaxFunc(newBoard, depthLimit - 1);
-            value = -nega.getFirst();
-            move = nega.getSecond();
+                if (depthLimit > 1 && !board.turnIsRepeating()) {
+                    value = -nega.getFirst();
+                }
             if(value > best_score){
                 best_move = currentMove;
                 best_score = value;
