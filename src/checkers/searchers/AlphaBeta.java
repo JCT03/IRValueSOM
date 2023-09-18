@@ -59,7 +59,7 @@ public class AlphaBeta extends CheckersSearcher {
                 alpha = value;
             }
             if(alpha >= beta){
-                 
+
             }
         }
         return new Duple<Integer, Move>(best_score, best_move);
