@@ -3,6 +3,9 @@ import checkers.core.Checkerboard;
 import checkers.core.CheckersSearcher;
 import checkers.core.Move;
 import core.Duple;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
 
@@ -19,15 +22,12 @@ public class Random extends CheckersSearcher {
 
     @Override
     public Optional<Duple<Integer, Move>> selectMove(Checkerboard board) {
-        Optional<Duple<Integer, Move>> best = Optional.empty();
-        for (Checkerboard alternative: board.getNextBoards()) {
-            numNodes += 1;
-            int negation = board.getCurrentPlayer() != alternative.getCurrentPlayer() ? -1 : 1;
-            int scoreFor = negation * getEvaluator().applyAsInt(alternative);
-            if (best.isEmpty() || best.get().getFirst() < scoreFor) {
-                best = Optional.of(new Duple<>(scoreFor, alternative.getLastMove()));
-            }
-        }
-        return best;
+        Optional<Duple<Integer, Move>> move = Optional.empty();
+        numNodes+=1;
+        int numMoves = board.getCurrentPlayerMoves().size();
+        int random = (int) (Math.random() * (numMoves));
+        List<Move> list = new ArrayList<Move>(board.getCurrentPlayerMoves());
+        Move randMove = list.get(random);
+        return Optional.of(new Duple<Integer,Move>(0, randMove));
     }
 }
