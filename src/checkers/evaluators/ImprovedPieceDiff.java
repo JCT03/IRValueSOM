@@ -8,7 +8,7 @@ public class ImprovedPieceDiff implements ToIntFunction<Checkerboard> {
     @Override
     public int applyAsInt(Checkerboard value) {
         int result = value.numPiecesOf(value.getCurrentPlayer())- value.numPiecesOf(value.getCurrentPlayer().opponent());
-        result = result + value.numKingsOf(value.getCurrentPlayer());
+        result = result + value.numKingsOf(value.getCurrentPlayer())-value.numKingsOf(value.getCurrentPlayer().opponent());
         return result;
     }
 }
