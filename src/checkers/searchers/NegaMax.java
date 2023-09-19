@@ -45,9 +45,11 @@ public class NegaMax extends CheckersSearcher {
             newBoard.move(currentMove);
             int value = 0;
             Duple<Integer, Move> nega = NegaMaxFunc(newBoard, depthLimit - 1);
-                if (depthLimit > 1 && !board.turnIsRepeating()) {
-                    value = -nega.getFirst();
-                }
+            if (depthLimit > 1 && !board.turnIsRepeating()) {
+                value = -nega.getFirst();
+            } else{
+                value = nega.getFirst();
+            }
             if(value > best_score){
                 best_move = currentMove;
                 best_score = value;
