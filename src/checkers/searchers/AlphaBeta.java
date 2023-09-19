@@ -45,7 +45,7 @@ public class AlphaBeta extends CheckersSearcher {
             newBoard.move(currentMove);
             int value = 0;
             Move move;
-            if (depthLimit > 1 && !board.turnIsRepeating()) {
+            if (!newBoard.turnIsRepeating()) {
                 Duple<Integer, Move> nega = AlphaBetaFunc(newBoard, depthLimit - 1, -beta, -alpha);
                 value = -nega.getFirst();
             } else{
@@ -63,8 +63,9 @@ public class AlphaBeta extends CheckersSearcher {
                 alpha = value;
             }
             if(alpha >= beta){
-
-
+                best_move = currentMove;
+                best_score = value;
+                return new Duple<Integer, Move>(best_score, best_move);
             }
         }
         return new Duple<Integer, Move>(best_score, best_move);
