@@ -3,6 +3,7 @@ package checkers.searchers;
 import checkers.core.Checkerboard;
 import checkers.core.CheckersSearcher;
 import checkers.core.Move;
+import checkers.core.PlayerColor;
 import core.Duple;
 import java.util.HashMap;
 import java.util.Optional;
@@ -46,6 +47,9 @@ public class AlphaBetaTable extends CheckersSearcher {
             int value = 0;
             if (gameRecords.get(newBoard) != null && gameRecords.get(newBoard)[0] >= (getDepthLimit()-depthLimit)) {
                 value =  gameRecords.get(newBoard)[1];
+                if (newBoard.getCurrentPlayer().equals(PlayerColor.RED)) {
+                    value = -value;
+                }
             } else {
                 if (!newBoard.turnIsRepeating()) {
                     Duple<Integer, Move> nega = AlphaBetaFunc(newBoard, depthLimit - 1, -beta, -alpha);
@@ -55,6 +59,9 @@ public class AlphaBetaTable extends CheckersSearcher {
                     value = nega.getFirst();
                 }
                 int[] depthScore = {(getDepthLimit()-depthLimit),value};
+                if (newBoard.getCurrentPlayer().equals(PlayerColor.RED)) {
+                    depthScore[1] = -depthScore[1];
+                }
                 gameRecords.put(newBoard, depthScore);
             }
             if (best_move == null) {
