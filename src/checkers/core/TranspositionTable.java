@@ -3,6 +3,7 @@ import java.util.HashMap;
 
 public class TranspositionTable {
     private final HashMap<Integer, TranspositionTableEntry> transpotable = new HashMap<Integer, TranspositionTableEntry>();
+    //
 
     public boolean containsKey(Checkerboard board) {
         return transpotable.containsKey(board.hashCode());

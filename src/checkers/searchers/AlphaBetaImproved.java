@@ -20,8 +20,8 @@ public class AlphaBetaImproved extends CheckersSearcher {
 
     private int gameDepth;
 
-    private HashMap<Duple<Checkerboard, Integer>,Duple<Integer, PlayerColor>> gameRecords;
-    private HashMap<Duple<Checkerboard, Integer>,Duple<Integer, PlayerColor>> newGameRecords;
+    private HashMap<Checkerboard,ArrayList<Object>> gameRecords;
+    private HashMap<Checkerboard,ArrayList<Object>> newGameRecords;
     @Override
     public int numNodesExpanded() {
         return numNodes;
@@ -38,8 +38,8 @@ public class AlphaBetaImproved extends CheckersSearcher {
 
     public AlphaBetaImproved(ToIntFunction<Checkerboard> e){
         super(e);
-        gameRecords = new HashMap<Duple<Checkerboard, Integer>,Duple<Integer, PlayerColor>>();
-        newGameRecords = new HashMap<Duple<Checkerboard, Integer>,Duple<Integer, PlayerColor>>();
+        gameRecords = new HashMap<Checkerboard,ArrayList<Object>>();
+        newGameRecords = new HashMap<Checkerboard,ArrayList<Object>>();
     }
 
     public Duple<Integer, Move> AlphaBetaFunc(Checkerboard board, int depthLimit, int alpha, int beta){
@@ -58,18 +58,16 @@ public class AlphaBetaImproved extends CheckersSearcher {
             numNodes +=1;
             Checkerboard newBoard = board.duplicate();
             newBoard.move(currentMove);
-            for (Duple<Checkerboard, Integer> potBoard: gameRecords.keySet()) {
-                if(newBoard.equals(potBoard.getFirst())){
-                    System.out.println("Board Found");
-                    newGameRecords.put(potBoard, gameRecords.get(potBoard));
-                    Duple<Integer, PlayerColor> score = gameRecords.get(potBoard);
-                    if(score.getSecond() == newBoard.getCurrentPlayer()) {
-                        System.out.println(score.getFirst());
-                        return new Duple<Integer, Move>(score.getFirst(), currentMove);
-                    }
-                    else{
-                        return new Duple<Integer, Move>(-score.getFirst(), currentMove);
-                    }
+            if(gameRecords.get(newBoard) != null)
+            {
+                ArrayList<Object> objects = gameRecords.get(newBoard);
+                System.out.println("Board Found");
+                newGameRecords.put(newBoard, gameRecords.get(newBoard));
+                if(objects.get(2) == newBoard.getCurrentPlayer()) {
+                    return new Duple<Integer, Move>((Integer) objects.get(0), currentMove);
+                }
+                else{
+                    return new Duple<Integer, Move>(-(Integer) objects.get(0), currentMove);
                 }
             }
             int value = 0;
@@ -94,11 +92,22 @@ public class AlphaBetaImproved extends CheckersSearcher {
             if(alpha >= beta){
                 best_move = currentMove;
                 best_score = value;
-                newGameRecords.put(new Duple<Checkerboard, Integer>(newBoard, gameDepth + getDepthLimit() - depthLimit), new Duple<Integer, PlayerColor>(best_score, board.getCurrentPlayer()));
+                Integer Conscore = (Integer) best_score;
+                Integer depth = (Integer) gameDepth + getDepthLimit() - depthLimit;
+                ArrayList<Object> info = new ArrayList<>();
+                info.add(0, Conscore);
+                info.add(1, depth);
+                info.add(2, newBoard.getCurrentPlayer());
+                newGameRecords.put(newBoard, info);
                 return new Duple<Integer, Move>(best_score, best_move);
             }
-            newGameRecords.put(new Duple<Checkerboard, Integer>(newBoard, gameDepth + getDepthLimit() - depthLimit), new Duple<Integer, PlayerColor>(value, board.getCurrentPlayer()));
-        }
+            Integer Conscore = (Integer) value;
+            Integer depth = (Integer) gameDepth + getDepthLimit() - depthLimit;
+            ArrayList<Object> info = new ArrayList<>();
+            info.add(0, Conscore);
+            info.add(1, depth);
+            info.add(2, newBoard.getCurrentPlayer());
+            newGameRecords.put(newBoard, info);        }
         return new Duple<Integer, Move>(best_score, best_move);
     }
 }
