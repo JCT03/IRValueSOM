@@ -6,6 +6,7 @@ import checkers.core.Move;
 import checkers.core.PlayerColor;
 import core.Duple;
 
+import java.lang.reflect.Array;
 import java.security.DrbgParameters;
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -20,8 +21,7 @@ public class AlphaBetaImproved extends CheckersSearcher {
 
     private int gameDepth;
 
-    private HashMap<Checkerboard,ArrayList<Object>> gameRecords;
-    private HashMap<Checkerboard,ArrayList<Object>> newGameRecords;
+    private HashMap<Checkerboard,int[]> gameRecords;
     @Override
     public int numNodesExpanded() {
         return numNodes;
@@ -29,17 +29,12 @@ public class AlphaBetaImproved extends CheckersSearcher {
 
     @Override
     public Optional<Duple<Integer,  Move>> selectMove(Checkerboard board) {
-        gameDepth = board.getNumMovesMade();
-        gameRecords.clear();
-        gameRecords.putAll(newGameRecords);
-        newGameRecords.clear();
+        gameRecords = new HashMap<Checkerboard,int[]>();
         return Optional.of(AlphaBetaFunc(board, getDepthLimit(), -Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
 
     public AlphaBetaImproved(ToIntFunction<Checkerboard> e){
         super(e);
-        gameRecords = new HashMap<Checkerboard,ArrayList<Object>>();
-        newGameRecords = new HashMap<Checkerboard,ArrayList<Object>>();
     }
 
     public Duple<Integer, Move> AlphaBetaFunc(Checkerboard board, int depthLimit, int alpha, int beta){
@@ -58,29 +53,19 @@ public class AlphaBetaImproved extends CheckersSearcher {
             numNodes += 1;
             Checkerboard newBoard = board.duplicate();
             newBoard.move(currentMove);
-            if (gameRecords.get(newBoard) != null) {
-                ArrayList<Object> objects = gameRecords.get(newBoard);
-                System.out.println("Board Found");
-                newGameRecords.put(newBoard, gameRecords.get(newBoard));
-                System.out.println(newBoard.getCurrentPlayer());
-                if (objects.get(2) == newBoard.getCurrentPlayer()) {
-                    System.out.println("New Move with " + objects.get(0) + " score");
-                    return new Duple<Integer, Move>((Integer) objects.get(0), currentMove);
-                } else {
-                    System.out.println("New Move with " + objects.get(0) + " score");
-                    return new Duple<Integer, Move>(-(Integer) objects.get(0), currentMove);
-                }
-            } else {
-
-            }
             int value = 0;
-            Move move;
-            if (!newBoard.turnIsRepeating()) {
-                Duple<Integer, Move> nega = AlphaBetaFunc(newBoard, depthLimit - 1, -beta, -alpha);
-                value = -nega.getFirst();
+            if (gameRecords.get(newBoard) != null && gameRecords.get(newBoard)[0] >= (getDepthLimit()-depthLimit)) {
+                value =  gameRecords.get(newBoard)[1];
             } else {
-                Duple<Integer, Move> nega = AlphaBetaFunc(newBoard, depthLimit - 1, alpha, beta);
-                value = nega.getFirst();
+                if (!newBoard.turnIsRepeating()) {
+                    Duple<Integer, Move> nega = AlphaBetaFunc(newBoard, depthLimit - 1, -beta, -alpha);
+                    value = -nega.getFirst();
+                } else {
+                    Duple<Integer, Move> nega = AlphaBetaFunc(newBoard, depthLimit - 1, alpha, beta);
+                    value = nega.getFirst();
+                }
+                int[] depthScore = {(getDepthLimit()-depthLimit),value};
+                gameRecords.put(newBoard, depthScore);
             }
             if (best_move == null) {
                 best_move = currentMove;
@@ -95,24 +80,9 @@ public class AlphaBetaImproved extends CheckersSearcher {
             if (alpha >= beta) {
                 best_move = currentMove;
                 best_score = value;
-                System.out.println(best_score);
-                Integer Conscore = (Integer) best_score;
-                Integer depth = (Integer) gameDepth + getDepthLimit() - depthLimit;
-                ArrayList<Object> info = new ArrayList<>();
-                info.add(0, Conscore);
-                info.add(1, depth);
-                info.add(2, newBoard.getCurrentPlayer());
-                newGameRecords.put(newBoard, info);
                 return new Duple<Integer, Move>(best_score, best_move);
             }
-            Integer Conscore = (Integer) value;
-            Integer depth = (Integer) gameDepth + getDepthLimit() - depthLimit;
-            ArrayList<Object> info = new ArrayList<>();
-            info.add(0, Conscore);
-            info.add(1, depth);
-            info.add(2, newBoard.getCurrentPlayer());
-            newGameRecords.put(newBoard, info);
         }
-        return new Duple<Integer, Move>(best_score, best_move);
+    return new Duple<Integer, Move>(best_score, best_move);
     }
 }
