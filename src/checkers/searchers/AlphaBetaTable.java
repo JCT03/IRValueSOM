@@ -16,7 +16,7 @@ import java.util.Enumeration;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
 
-public class AlphaBetaImproved extends CheckersSearcher {
+public class AlphaBetaTable extends CheckersSearcher {
     private int numNodes;
 
     private int gameDepth;
@@ -33,7 +33,7 @@ public class AlphaBetaImproved extends CheckersSearcher {
         return Optional.of(AlphaBetaFunc(board, getDepthLimit(), -Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
 
-    public AlphaBetaImproved(ToIntFunction<Checkerboard> e){
+    public AlphaBetaTable(ToIntFunction<Checkerboard> e){
         super(e);
     }
 
