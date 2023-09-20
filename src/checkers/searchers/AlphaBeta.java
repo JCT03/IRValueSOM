@@ -5,7 +5,6 @@ import checkers.core.CheckersSearcher;
 import checkers.core.Move;
 import core.Duple;
 
-import java.security.DrbgParameters;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
 
@@ -44,7 +43,6 @@ public class AlphaBeta extends CheckersSearcher {
             Checkerboard newBoard = board.duplicate();
             newBoard.move(currentMove);
             int value = 0;
-            Move move;
             if (!newBoard.turnIsRepeating()) {
                 Duple<Integer, Move> nega = AlphaBetaFunc(newBoard, depthLimit - 1, -beta, -alpha);
                 value = -nega.getFirst();

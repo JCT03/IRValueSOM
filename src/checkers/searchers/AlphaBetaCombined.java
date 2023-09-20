@@ -3,17 +3,9 @@ package checkers.searchers;
 import checkers.core.Checkerboard;
 import checkers.core.CheckersSearcher;
 import checkers.core.Move;
-import checkers.core.PlayerColor;
 import core.Duple;
-
-import java.lang.reflect.Array;
-import java.security.DrbgParameters;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.HashMap;
-import java.util.Enumeration;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.function.ToIntFunction;
@@ -21,7 +13,6 @@ import java.util.function.ToIntFunction;
 public class AlphaBetaCombined extends CheckersSearcher {
     private int numNodes;
 
-    private int gameDepth;
 
     private HashMap<Checkerboard,int[]> gameRecords;
     @Override

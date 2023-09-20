@@ -4,9 +4,6 @@ import checkers.core.Checkerboard;
 import checkers.core.CheckersSearcher;
 import checkers.core.Move;
 import core.Duple;
-import search.SearchNode;
-
-import java.security.DrbgParameters;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
