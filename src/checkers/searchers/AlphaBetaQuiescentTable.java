@@ -17,6 +17,7 @@ public class AlphaBetaQuiescentTable extends CheckersSearcher {
         return numNodes;
     }
 
+    @Override
     public Optional<Duple<Integer,  Move>> selectMove(Checkerboard board) {
         gameRecords = new HashMap<Checkerboard,int[]>();
         return Optional.of(AlphaBetaFunc(board, getDepthLimit(), -Integer.MAX_VALUE, Integer.MAX_VALUE));
