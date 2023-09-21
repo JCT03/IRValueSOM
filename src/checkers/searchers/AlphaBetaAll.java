@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.function.ToIntFunction;
 
-public class AlphaBetaCombined extends CheckersSearcher {
+public class AlphaBetaAll extends CheckersSearcher {
     private int numNodes;
 
 
@@ -27,7 +27,7 @@ public class AlphaBetaCombined extends CheckersSearcher {
         return Optional.of(AlphaBetaFunc(board, getDepthLimit(), -Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
 
-    public AlphaBetaCombined(ToIntFunction<Checkerboard> e){
+    public AlphaBetaAll(ToIntFunction<Checkerboard> e){
         super(e);
     }
 
@@ -38,7 +38,7 @@ public class AlphaBetaCombined extends CheckersSearcher {
             } else if(board.playerWins(board.getCurrentPlayer().opponent())){
                 return new Duple<Integer, Move>(-Integer.MAX_VALUE, null);
             }
-        } else if(depthLimit <= 0) {
+        } else if(depthLimit <= 0 && !board.getLastMove().isCapture()) {
             return new Duple<Integer, Move>(getEvaluator().applyAsInt(board), null);
         }
         int best_score = -Integer.MAX_VALUE;
