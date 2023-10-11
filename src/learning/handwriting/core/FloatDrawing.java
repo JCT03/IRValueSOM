@@ -33,8 +33,13 @@ public class FloatDrawing {
     //  is calculated as follows:
     //  d1weight * d1 pixel value + (1.0 - d1weight) * d2 pixel value
     public static FloatDrawing weightedAverageOf(FloatDrawing d1, FloatDrawing d2, double d1weight) {
-        // Your code here
-        return null;
+        FloatDrawing ret = new FloatDrawing(d1.getWidth(),d1.getHeight());
+        for (int x = 0; x < d1.getWidth(); x++) {
+            for (int y = 0; y < d1.getHeight(); y++ ) {
+                ret.set(x,y,d1weight * d1.get(x, y) + (1.0 - d1weight) * d2.get(x, y));
+            }
+        }
+        return ret;
     }
 
     public int getWidth() {
