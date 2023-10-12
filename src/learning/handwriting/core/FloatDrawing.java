@@ -53,7 +53,13 @@ public class FloatDrawing {
     // TODO: Calculate the pixel-by-pixel Euclidean distance between these two
     //  FloatDrawing objects.
     public double euclideanDistance(FloatDrawing other) {
-        return 0.0;
+        double distance = 0;
+        for (int x = 0; x < pixels.length; x++) {
+            for (int y = 0; y < pixels[0].length; y++) {
+                distance+= ( pixels[x][y]-other.get(x, y)) * (pixels[x][y]-other.get(x, y));
+            }
+        }
+        return distance;
     }
 
     @Override
