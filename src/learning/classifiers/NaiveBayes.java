@@ -37,8 +37,11 @@ public class NaiveBayes<V,L,F> implements Classifier<V,L> {
     @Override
     public void train(ArrayList<Duple<V, L>> data) {
         for (Duple<V, L> entry: data) {
-            priors.bump(entry.getSecond());
+            priors.bump(entry.getSecond()); 
             for (Duple<F, Integer> feature: allFeaturesFrom.apply(entry.getFirst())) {
+                if (featuresByLabel.get(entry.getSecond()) == null) {
+                    featuresByLabel.put(entry.getSecond(), new Histogram<>());
+                }
                 featuresByLabel.get(entry.getSecond()).bumpBy(feature.getFirst(), feature.getSecond());
             }
         }

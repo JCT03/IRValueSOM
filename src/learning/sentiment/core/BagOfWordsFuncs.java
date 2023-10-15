@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import javax.swing.RowFilter.Entry;
+
+import core.Duple;
+
 public class BagOfWordsFuncs {
     public static <K, N extends Number> double cosineDistance(Map<K,N> a, Map<K, N> b) {
         return 1.0 - cosineSimilarity(a, b);
@@ -30,7 +34,11 @@ public class BagOfWordsFuncs {
         // TODO: Find the weighted average of Maps a and b. Multiply the value for each key in a with aWeight,
         //  then multiply the corresponding value from b by (1 - aWeight), and add them.
         //  Since N extends Number, you can use the Number.doubleValue() method to get a concrete value.
-        return null;
+        HashMap<K,Double> newMap = new HashMap<K,Double>();
+        for (Map.Entry<K,N> entry: a.entrySet()) {
+            newMap.put(entry.getKey(), entry.getValue().doubleValue() * aWeight + b.get(entry.getKey()).doubleValue() * (1-aWeight));
+        }
+        return newMap;
     }
 
     public static <K, N> HashSet<K> allKeysFrom(Map<K,N> a, Map<K, N> b) {

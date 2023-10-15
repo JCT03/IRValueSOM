@@ -35,7 +35,7 @@ public class SelfOrgMap<V> {
                 System.out.println("map:\n" + map[x][y]);
                 System.out.println("example\n" + example);
                 System.out.println("distance " + distance.applyAsDouble(map[x][y], example));
-                if (distance.applyAsDouble(map[x][y], example) < closestDist) {
+                if ((distance.applyAsDouble(map[x][y], example) < closestDist)){
                     closestDist = distance.applyAsDouble(map[x][y], example);
                     closestPoint = new SOMPoint(x,y);
                 }
