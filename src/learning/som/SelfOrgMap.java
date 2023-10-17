@@ -26,18 +26,14 @@ public class SelfOrgMap<V> {
     //  that is, the y-coordinate is updated in the outer loop, and the x-coordinate
     //  is updated in the inner loop.
     public SOMPoint bestFor(V example) {
-        
-		double closestDist = Integer.MAX_VALUE;
+		double closestDist = Double.MAX_VALUE;
         SOMPoint closestPoint = null;
+
         for (int y = 0; y<map[0].length; y++) {
             for (int x = 0; x<map.length; x++) {
-                System.out.println("x: " + x + "  y: " + y);
-                System.out.println("map:\n" + map[x][y]);
-                System.out.println("example\n" + example);
-                System.out.println("distance " + distance.applyAsDouble(map[x][y], example));
                 if ((distance.applyAsDouble(map[x][y], example) < closestDist)){
                     closestDist = distance.applyAsDouble(map[x][y], example);
-                    closestPoint = new SOMPoint(x,y);
+                    closestPoint = new SOMPoint(x, y);
                 }
             }
         }

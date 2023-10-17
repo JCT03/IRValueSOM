@@ -44,7 +44,7 @@ public class Knn<V, L> implements Classifier<V, L> {
         }
         Histogram<L> h = new Histogram<>();
         System.out.println("value " +value);
-        for (int i = 0; i <k; i++) {
+        for (int i = 0;i< data.size() && i <k; i++) {
             System.out.println(sortedV.peek());
             h.bump(sortedV.poll().getSecond());
         }
