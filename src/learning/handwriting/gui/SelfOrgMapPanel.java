@@ -6,7 +6,7 @@ import learning.som.SelfOrgMap;
 import javax.swing.*;
 import java.awt.*;
 
-public class SelfOrgMapPanel extends JPanel {
+public class 	SelfOrgMapPanel extends JPanel {
 	private SelfOrgMap<FloatDrawing> som;
 	
 	public SelfOrgMapPanel(SelfOrgMap som) {
