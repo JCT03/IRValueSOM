@@ -61,7 +61,11 @@ public class NaiveBayes<V,L,F> implements Classifier<V,L> {
         for (L label: featuresByLabel.keySet()) {
             currProduct = priors.getPortionFor(label);
             for (Duple<F, Integer> feature: allFeaturesFrom.apply(value)) {
-                currProduct *= featuresByLabel.get(label).getPortionFor(feature.getFirst());
+                int count =1;
+                int total =1;
+                count += featuresByLabel.get(label).getCountFor(feature.getFirst());
+                total += featuresByLabel.get(label).getTotalCounts();
+                currProduct *= (double) count/total;
             }
             if (currProduct > bestProduct) {
                 bestProduct = currProduct;
