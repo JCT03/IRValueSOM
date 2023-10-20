@@ -18,7 +18,7 @@ public class ReadIn {
         File[] listOfPosFiles = folderPos.listFiles();
         System.out.println(listOfNegFiles.length);
         System.out.println(listOfPosFiles.length);
-        FileWriter myWriter = new FileWriter("src/learning/handwriting/core/aclImdb/train/CompleteFiles/Dataset.txt");
+        FileWriter myWriter = new FileWriter("src/learning/handwriting/core/aclImdb/train/CompleteFiles/DatasetNeg.txt");
         for (File file : listOfNegFiles) {
             if (file.isFile()) {
                 Scanner s = new Scanner(file);
@@ -27,7 +27,7 @@ public class ReadIn {
             }
         }
         myWriter.close();
-        FileWriter myWriter2 = new FileWriter("src/learning/handwriting/core/aclImdb/train/CompleteFiles/Dataset.txt");
+        FileWriter myWriter2 = new FileWriter("src/learning/handwriting/core/aclImdb/train/CompleteFiles/DatasetPos.txt");
         for (File file : listOfPosFiles) {
             if (file.isFile()) {
                 Scanner s = new Scanner(file);

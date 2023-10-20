@@ -25,11 +25,29 @@ public class MovieAnalysis {
         }
     }
     public static ArrayList<Duple<Histogram<String>,String>> openSentimentStrings(String filename) throws FileNotFoundException {
-        Scanner s = new Scanner(filename);
+        File folderNeg = new File("src/learning/handwriting/core/aclImdb/train/CompleteFiles/DatasetNeg.txt");
+        File folderPos = new File("src/learning/handwriting/core/aclImdb/train/CompleteFiles/DatasetPos.txt");
+        Scanner sNeg = new Scanner(folderNeg);
+        Scanner sPos = new Scanner(folderPos);
         ArrayList<Duple<Histogram<String>,String>> result = new ArrayList<>();
-        while (s.hasNextLine()) {
-            //String[] label_text = s.
-            //result.add(new Duple<>(bagOfWordsFrom(label_text[1]), label_text[0]));
+        while (sNeg.hasNextLine()) {
+            String line = sNeg.nextLine();
+            String score = "empty";
+            if(line.contains("[//]")){
+                score = line.substring(4);
+            }
+            String text = sNeg.nextLine();
+            result.add(new Duple<>(bagOfWordsFrom(text), score));
+        }
+        return result;
+    }
+    public static Histogram<String> bagOfWordsFrom(String line) {
+        Histogram<String> result = new Histogram<>();
+        // YOUR CODE HERE
+        // From https://www.delftstack.com/howto/java/how-to-remove-punctuation-from-string-in-java/#:~:text=Remove%20Punctuation%20From%20String%20Using%20the%20replaceAll%20%28%29,%5Cp%20%7BPunct%7D%2C%20which%20means%20all%20the%20punctuation%20symbols.
+        line = line.replaceAll("\\p{Punct}", " ");
+        for (String word: line.split("\\s")) {
+            result.bump(word);
         }
         return result;
     }
