@@ -55,7 +55,7 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 		// TODO: Implement the decision tree learning algorithm
 		if (numLabels(data) == 1) {
 			// TODO: Return a leaf node consisting of the only label in data
-			return null;
+			return new DTLeaf<V,L,F,FV>(data.get(0).getSecond());
 		} else {
 			// TODO: Return an interior node.
 			//  If restrictFeatures is false, call allFeatures.apply() to get a complete list
@@ -70,7 +70,36 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 			//  Note: It is possible for the split to fail; that is, you can have a split
 			//  in which one branch has zero elements. In this case, return a leaf node
 			//  containing the most popular label in the branch that has elements.
-			return null;
+			ArrayList<Duple<F,FV>> features = null;
+			ArrayList<Duple<F,FV>> all = allFeatures.apply(data);
+			int numFeatures = all.size();
+			if (!restrictFeatures) {
+				features = all;
+			}
+			else {
+				features = reducedFeatures(data, allFeatures, (int) Math.sqrt(numFeatures));
+			}
+			double bestGain = 0;
+			Duple<F,FV> bestCombo = null;
+			ArrayList<Duple<V,L>> bestLeft = null;
+			ArrayList<Duple<V,L>> bestRight = null;
+			for (Duple<F,FV> combo: features) {
+				Duple<ArrayList<Duple<V, L>>, ArrayList<Duple<V, L>>> children =splitOn(data, combo.getFirst(), combo.getSecond(),getFeatureValue);
+				double thisGain = gain(data,children.getFirst(),children.getSecond());
+				if (thisGain > bestGain) {
+					bestGain= thisGain;
+					bestCombo = combo;
+					bestLeft = children.getFirst();
+					bestRight = children.getSecond();
+				}
+			}
+			if (bestLeft.size() == 0) {
+				return new DTLeaf<V,L,F,FV>(mostPopularLabelFrom(bestRight));
+			}
+			else if (bestRight.size() == 0) {
+				return new DTLeaf<V,L,F,FV>(mostPopularLabelFrom(bestLeft));
+			}
+			return new DTInterior<V,L,F,FV>(bestCombo.getFirst(), bestCombo.getSecond(), train(bestLeft), train(bestRight), getFeatureValue, successor);
 		}		
 	}
 
@@ -86,7 +115,12 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 	//    an `ArrayList` that is the same length as `data`, where each element is selected randomly
 	//    from `data`. Should pass `DTTest.testResample()`.
 	public static <V,L> ArrayList<Duple<V,L>> resample(ArrayList<Duple<V,L>> data) {
-		return null;
+		ArrayList<Duple<V,L>> randomSample = new ArrayList<>();
+		for (int i = 0; i < data.size(); i++) {
+			int randIndex = (int) (Math.random() * (data.size()-1));
+			randomSample.add(data.get(randIndex));
+		}
+		return randomSample;
 	}
 
 	public static <V,L> double getGini(ArrayList<Duple<V,L>> data) {
