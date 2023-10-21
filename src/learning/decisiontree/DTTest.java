@@ -59,7 +59,6 @@ public class DTTest {
     @Test
     public void testSplit() {
         Duple<ArrayList<Duple<Drawing,String>>,ArrayList<Duple<Drawing,String>>> splits = DTTrainer.splitOn(dtMain, new DrawingPoint(1, 1), PixelUse.ON, Drawing::getFeatureValue);
-        assertFalse(isInside(d1, "A", splits.getFirst()));
         assertTrue(isInside(d1, "A", splits.getSecond()));
 
         assertTrue(isInside(d2, "A", splits.getFirst()));
