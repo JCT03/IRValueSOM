@@ -90,14 +90,22 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 		//  Use of a Histogram<L> for this purpose is recommended.
 		//  Gini coefficient is 1 - sum(for all labels i, p_i^2)
 		//  Should pass DTTest.testGini().
-		return 1.0;
+		Histogram<L> LHist = new Histogram<>();
+		for (Duple<V,L> dataEntry : data) {
+			LHist.bump(dataEntry.getSecond());
+		}
+		double sum = 0;
+		for (L label : LHist) {
+			sum += LHist.getPortionFor(label) * LHist.getPortionFor(label);
+		}
+		return 1-sum;
 	}
 
 	public static <V,L> double gain(ArrayList<Duple<V,L>> parent, ArrayList<Duple<V,L>> child1,
 									ArrayList<Duple<V,L>> child2) {
 		// TODO: Calculate the gain of the split. Add the gini values for the children.
 		//  Subtract that sum from the gini value for the parent. Should pass DTTest.testGain().
-		return 0;
+		return getGini(parent) - getGini(child1) - getGini(child2);
 	}
 
 	public static <V,L, F, FV  extends Comparable<FV>> Duple<ArrayList<Duple<V,L>>,ArrayList<Duple<V,L>>> splitOn
@@ -108,7 +116,16 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 		//  feature has a value less than or equal to featureValue. The second
 		//  returned list should be everything else from this list.
 		//  Should pass DTTest.testSplit().
-
-		return null;
+		ArrayList<Duple<V,L>> lessEqual = new ArrayList<>();
+		ArrayList<Duple<V,L>> more = new ArrayList<>();
+		for (Duple<V,L> dataEntry: data) {
+			if (getFeatureValue.apply(dataEntry.getFirst(), feature).compareTo(featureValue) <= 0) {
+				lessEqual.add(dataEntry);
+			}
+			else {
+				more.add(dataEntry);
+			}
+		}
+		return new Duple<ArrayList<Duple<V,L>>,ArrayList<Duple<V,L>>>(lessEqual, more);
 	}
 }
