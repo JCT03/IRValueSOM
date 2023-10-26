@@ -93,10 +93,13 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 					bestRight = children.getSecond();
 				}
 			}
-			if (bestLeft.size() == 0) {
+			System.out.println("data");
+			System.out.println("left" + bestLeft);
+			System.out.println("right" + bestRight);
+			if ((bestLeft == null) || (bestLeft.size() ==0)) {
 				return new DTLeaf<V,L,F,FV>(mostPopularLabelFrom(bestRight));
 			}
-			else if (bestRight.size() == 0) {
+			else if ((bestRight == null) || (bestRight.size() ==0)) {
 				return new DTLeaf<V,L,F,FV>(mostPopularLabelFrom(bestLeft));
 			}
 			return new DTInterior<V,L,F,FV>(bestCombo.getFirst(), bestCombo.getSecond(), train(bestLeft), train(bestRight), getFeatureValue, successor);
