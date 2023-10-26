@@ -86,7 +86,6 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 			for (Duple<F,FV> combo: features) {
 				Duple<ArrayList<Duple<V, L>>, ArrayList<Duple<V, L>>> children =splitOn(data, combo.getFirst(), combo.getSecond(),getFeatureValue);
 				double thisGain = gain(data,children.getFirst(),children.getSecond());
-				System.out.println(bestGain);
 				if (thisGain > bestGain) {
 					bestGain= thisGain;
 					bestCombo = combo;
