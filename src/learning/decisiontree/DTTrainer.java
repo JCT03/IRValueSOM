@@ -79,13 +79,14 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 			else {
 				features = reducedFeatures(data, allFeatures, (int) Math.sqrt(numFeatures));
 			}
-			double bestGain = 0;
+			double bestGain = -1;
 			Duple<F,FV> bestCombo = null;
 			ArrayList<Duple<V,L>> bestLeft = null;
 			ArrayList<Duple<V,L>> bestRight = null;
 			for (Duple<F,FV> combo: features) {
 				Duple<ArrayList<Duple<V, L>>, ArrayList<Duple<V, L>>> children =splitOn(data, combo.getFirst(), combo.getSecond(),getFeatureValue);
 				double thisGain = gain(data,children.getFirst(),children.getSecond());
+				System.out.println(bestGain);
 				if (thisGain > bestGain) {
 					bestGain= thisGain;
 					bestCombo = combo;
@@ -93,9 +94,6 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 					bestRight = children.getSecond();
 				}
 			}
-			System.out.println("data");
-			System.out.println("left" + bestLeft);
-			System.out.println("right" + bestRight);
 			if ((bestLeft == null) || (bestLeft.size() ==0)) {
 				return new DTLeaf<V,L,F,FV>(mostPopularLabelFrom(bestRight));
 			}
