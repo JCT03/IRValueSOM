@@ -38,9 +38,12 @@ public class RandomForest<V,L, F, FV extends Comparable<FV>> implements Classifi
 	@Override
 	public L classify(V v) {
 		Histogram<L> classifications = new Histogram<L>();
-		HashSet<L> results = getLabels();
-		for (L result: results) {
-			classifications.bump(result);
+		// HashSet<L> results = getLabels();
+		// for (L result: results) {
+		// 	classifications.bump(result);
+		// }
+		for (DecisionTree<V,L,F,FV> root: treeRoots) {
+			classifications.bump(root.classify(v));
 		}
 		return classifications.getPluralityWinner();
 	}
