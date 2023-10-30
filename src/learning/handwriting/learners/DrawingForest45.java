@@ -13,13 +13,12 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class DrawingForest130 extends RandomForest<Drawing,String,DrawingPoint, PixelUse> implements PixelUser {
+public class DrawingForest45 extends RandomForest<Drawing,String,DrawingPoint, PixelUse> implements PixelUser {
     private int width, height;
 
-    public DrawingForest130() {
-        super(130, Drawing::allFeatures, Drawing::getFeatureValue, PixelUse::successor);
+    public DrawingForest45() {
+        super(45, Drawing::allFeatures, Drawing::getFeatureValue, PixelUse::successor);
     }
-
     @Override
     public void train(ArrayList<Duple<Drawing, String>> data) {
         this.width = data.get(0).getFirst().getWidth();

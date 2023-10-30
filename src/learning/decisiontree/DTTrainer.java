@@ -79,7 +79,7 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 			else {
 				features = reducedFeatures(data, allFeatures, (int) Math.sqrt(numFeatures));
 			}
-			double bestGain = -1;
+			double bestGain = -Integer.MAX_VALUE;
 			Duple<F,FV> bestCombo = null;
 			ArrayList<Duple<V,L>> bestLeft = null;
 			ArrayList<Duple<V,L>> bestRight = null;
@@ -144,7 +144,7 @@ public class DTTrainer<V,L, F, FV extends Comparable<FV>> {
 									ArrayList<Duple<V,L>> child2) {
 		// TODO: Calculate the gain of the split. Add the gini values for the children.
 		//  Subtract that sum from the gini value for the parent. Should pass DTTest.testGain().
-		return getGini(parent) - getGini(child1) - getGini(child2);
+		return getGini(parent) - (getGini(child1) + getGini(child2));
 	}
 
 	public static <V,L, F, FV  extends Comparable<FV>> Duple<ArrayList<Duple<V,L>>,ArrayList<Duple<V,L>>> splitOn
