@@ -1,7 +1,5 @@
 package learning.core;
 
-import learning.sentiment.core.BagOfWordsFuncs;
-
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -73,9 +71,5 @@ public class Histogram<T> implements Iterable<T> {
 
     public T getPluralityWinner() {
         return stream().max(Comparator.comparingInt(t -> counts.get(t))).get();
-    }
-
-    public double cosineDistance(Histogram<T> other) {
-        return BagOfWordsFuncs.cosineDistance(this.counts, other.counts);
     }
 }

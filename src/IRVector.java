@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 
 public class IRVector {
     double[] vector;
@@ -8,6 +9,10 @@ public class IRVector {
 
     public IRVector(double reading1, double reading2, double reading3, double reading4, double reading5, double reading6, double reading7) {
         vector = new double[] {reading1, reading2, reading3, reading4, reading5, reading6, reading7};
+    }
+    //array must be of length 7
+    public IRVector(double[] readings) {
+        vector = readings.clone();
     }
 
     public double get(int i) {
@@ -45,9 +50,14 @@ public class IRVector {
         }
         return false;
     }
-
+    @Override
     public String toString() {
-        return ("" + vector);
+        DecimalFormat round = new DecimalFormat("0.00"); 
+        String ret = "[";
+        for (int i = 0; i <6; i++) {
+            ret += round.format(vector[i]) + ", ";
+        }
+        return ret + round.format(vector[6]) + "]";
     }
 
 }

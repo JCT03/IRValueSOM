@@ -99,7 +99,7 @@ public class SelfOrgMap<V> {
         for (int x = 0; x < getMapWidth(); x++) {
             for (int y = 0; y < getMapHeight(); y++) {
                 result.append(String.format("(%d, %d):\n", x, y));
-                result.append(getNode(x, y));
+                result.append(getNode(x, y) + "\n");
             }
         }
         return result.toString();
