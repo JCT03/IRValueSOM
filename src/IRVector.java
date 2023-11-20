@@ -26,7 +26,7 @@ public class IRVector {
     public static IRVector weightedAverageOf(IRVector v1, IRVector v2, double v1weight) {
         IRVector ret = new IRVector();
         for (int i = 0; i < 7; i++) {
-            ret.set(i,v1.get(i)*v1weight+v2.get(i));
+            ret.set(i,v1.get(i)*v1weight+v2.get(i)*(1-v1weight));
         }
         return ret;
     }
