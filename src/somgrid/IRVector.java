@@ -1,3 +1,5 @@
+package somgrid;
+
 import java.text.DecimalFormat;
 
 public class IRVector {
@@ -39,17 +41,6 @@ public class IRVector {
         return Math.sqrt(distance);
     }
 
-    public boolean equals(IRVector other) {
-        if (other instanceof IRVector that) {
-            for (int i = 0; i < 7; i++) {
-                if (this.vector[i] != that.vector[i]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
     @Override
     public String toString() {
         DecimalFormat round = new DecimalFormat("0.00"); 
