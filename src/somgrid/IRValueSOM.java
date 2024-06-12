@@ -17,7 +17,7 @@ public class IRValueSOM {
         BufferedReader reader;
         ArrayList<IRVector> vectors = new ArrayList<>();
         try {
-			reader = new BufferedReader(new FileReader("src/somgrid/IRData.txt"));
+			reader = new BufferedReader(new FileReader("src/somgrid/IRData_FC.txt"));
 			String line = reader.readLine();
 			while (line != null) {
 				double[] input = new double[7];
@@ -51,6 +51,7 @@ public class IRValueSOM {
                 }
             }
         }
+        System.out.println(IRMap);
     }
     public double getValue(int x, int y, int IRNum) {
         return IRMap.getNode(x,y).get(IRNum);

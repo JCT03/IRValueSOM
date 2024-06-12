@@ -9,9 +9,6 @@ public class IRVector {
         vector = new double[7];
     }
 
-    public IRVector(double reading1, double reading2, double reading3, double reading4, double reading5, double reading6, double reading7) {
-        vector = new double[] {reading1, reading2, reading3, reading4, reading5, reading6, reading7};
-    }
     //array must be of length 7
     public IRVector(double[] readings) {
         vector = readings.clone();

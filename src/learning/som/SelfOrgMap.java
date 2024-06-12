@@ -48,10 +48,10 @@ public class SelfOrgMap<V> {
     //     using a learning rate of 0.4.
     public void train(V example) {
         SOMPoint bestPoint = bestFor(example);
-        map[bestPoint.x()][bestPoint.y()] = averager.weightedAverage(example, map[bestPoint.x()][bestPoint.y()], .9);
+        map[bestPoint.x()][bestPoint.y()] = averager.weightedAverage(example, map[bestPoint.x()][bestPoint.y()], .2);
         for(SOMPoint p:bestPoint.neighbors()) {
             if (p.x() < map.length && p.x() >= 0 && p.y() < map[0].length && p.y() >= 0) {
-                map[p.x()][p.y()] = averager.weightedAverage(example, map[p.x()][p.y()], .4);
+                map[p.x()][p.y()] = averager.weightedAverage(example, map[p.x()][p.y()], .1);
             }
         }
     }

@@ -18,7 +18,7 @@ public class SOMGridController {
 
     @FXML
     public void initialize() throws IOException {
-        int gridSize = 4;
+        int gridSize = 3;
         map = new IRValueSOM(gridSize);
         // Bar Chart documentation https://www.tutorialspoint.com/javafx/bar_chart.htm
         for (int x = 0; x < gridSize; x++) {
